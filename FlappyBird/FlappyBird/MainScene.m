@@ -29,7 +29,8 @@
     CGFloat maxTopCenter;
     CGFloat minTopCenter;
     UIButton *start;
-    BOOL restart;
+    BOOL restart, resetFrame;
+    int point;
 }
 
 - (void)viewDidLoad {
@@ -42,6 +43,7 @@
     self.size = CGSizeMake(self.view.bounds.size.width, self.view.bounds.size.height - statusAndNaviHeight);
     
     birdJumpSpeed = 4.0;
+    point = 0;
     
     [self addBackground];
     [self addPipe];
@@ -185,6 +187,8 @@
     [self.view addSubview:pipeTop2.view];
     [self.view addSubview:pipeBottom1.view];
     [self.view addSubview:pipeBottom2.view];
+    
+    resetFrame = YES;
 }
 
 -(CGFloat)randomCenterY{
@@ -201,10 +205,12 @@
     
     if (pipeTop1.view.frame.origin.x + pipeTop1.view.bounds.size.width <= 0) {
         pipeTop1.view.center = CGPointMake(pipeTop2.view.center.x + spaceForPipe, [self randomCenterY]);
+        resetFrame = YES;
     }
     
     if (pipeTop2.view.frame.origin.x + pipeTop2.view.bounds.size.width <= 0) {
         pipeTop2.view.center = CGPointMake(pipeTop1.view.center.x + spaceForPipe, [self randomCenterY]);
+        resetFrame = YES;
     }
     
     if (pipeBottom1.view.frame.origin.x + pipeBottom1.view.bounds.size.width <= 0) {
@@ -234,6 +240,14 @@
     //top
     if (CGRectIntersectsRect(bird.view.frame, top1.view.frame) || CGRectIntersectsRect(bird.view.frame, top2.view.frame) || CGRectIntersectsRect(bird.view.frame, bottom1.view.frame) || CGRectIntersectsRect(bird.view.frame, bottom2.view.frame)) {
         [self gameOver];
+    }
+    
+    if (resetFrame) {
+        if (bird.view.frame.origin.x >= pipeTop1.view.frame.origin.x + pipeTop1.view.frame.size.width*0.5|| bird.view.frame.origin.x >= pipeTop2.view.frame.origin.x + pipeTop2.view.frame.size.width*0.5) {
+            [bird pointSound];
+            point++;
+            resetFrame = NO;
+        }
     }
 }
 
