@@ -13,7 +13,7 @@
 -(instancetype)initWithName:(NSString *)name inScene:(Scene *)scene
 {
     self = [super initWithName:name inScene:scene];
-    UIImage *imgPipe = [UIImage imageNamed:@"pipebottom.png"];
+    UIImage *imgPipe = [UIImage imageNamed:@"pipe.png"];
     
     UIImageView *pipe = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, [Sprite width], [Sprite height])];
     pipe.image = imgPipe;

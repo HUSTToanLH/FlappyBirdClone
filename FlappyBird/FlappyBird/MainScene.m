@@ -28,6 +28,8 @@
     CGFloat haftPipe;
     CGFloat maxTopCenter;
     CGFloat minTopCenter;
+    UIButton *start;
+    BOOL restart;
 }
 
 - (void)viewDidLoad {
@@ -45,15 +47,50 @@
     [self addPipe];
     [self addBird];
     [self addBottom];
-    
-    
-    timer = [NSTimer scheduledTimerWithTimeInterval:0.05
-                                             target:self
-                                           selector:@selector(gameLoop)
-                                           userInfo:nil
-                                            repeats:true];
-    
-    
+    [self addButtonStart];
+    restart = NO;
+}
+
+-(void)addButtonStart{
+    start = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 80, 30)];
+    start.center = CGPointMake(self.size.width *0.5, self.size.height *0.5 - 60);
+    start.backgroundColor = [UIColor blueColor];
+    [start setTitle:@"START" forState:UIControlStateNormal];
+    start.titleLabel.font = [UIFont fontWithName:@"Arial" size:13];
+    [self.view addSubview:start];
+    [start addTarget:self action:@selector(onClick) forControlEvents:UIControlEventTouchUpInside];
+}
+
+-(void)onClick{
+    start.hidden = YES;
+    if (restart) {
+        [self removeAllSubview];
+        [self viewDidLoad];
+    }
+    [self startTimer];
+}
+
+-(void)removeAllSubview{
+    for (UIView *view  in [self.view subviews]) {
+        [view removeFromSuperview];
+    }
+}
+
+- (void)startTimer{
+    if (!timer) {
+        timer = [NSTimer scheduledTimerWithTimeInterval:0.05
+                                                 target:self
+                                               selector:@selector(gameLoop)
+                                               userInfo:nil
+                                                repeats:true];
+    }
+}
+
+- (void)stopTimer{
+    if ([timer isValid]) {
+        [timer invalidate];
+    }
+    timer = nil;
 }
 
 -(void)addBackground{
@@ -128,8 +165,8 @@
     spaceBottom = imgBottom.size.height*0.5;
     
     haftPipe = [Sprite height]*0.5;
-    maxTopCenter = self.size.height - spaceBottom - spaceForBird - 20 - haftPipe;
-    minTopCenter = 20 - haftPipe;
+    maxTopCenter = self.size.height - spaceBottom - spaceForBird - 30 - haftPipe;
+    minTopCenter = 30 - haftPipe;
     
     pipeTop1 = [[TopPipe alloc] initWithName:@"pipeTop1" inScene:self];
     pipeTop1.view.center = CGPointMake(self.view.bounds.size.width*4/3, [self randomCenterY]);
@@ -201,9 +238,12 @@
 }
 
 -(void)gameOver{
-    [timer invalidate];
+    [self stopTimer];
     bird.alive = NO;
     [bird animate];
+    [start setTitle:@"RESTART" forState:UIControlStateNormal];
+    restart = YES;
+    start.hidden = NO;
 }
 
 -(void)gameLoop

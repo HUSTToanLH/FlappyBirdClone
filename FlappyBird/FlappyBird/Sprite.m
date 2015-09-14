@@ -8,7 +8,7 @@
 
 #import "Sprite.h"
 
-#define pipeHeight 667
+#define pipeHeight 1200
 #define pipeWidth 60
 
 @class Scene;

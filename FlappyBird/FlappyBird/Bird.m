@@ -13,6 +13,7 @@
     BOOL isJumping, isClick;
     CGFloat jumpVelocity, fallAcceleration;
     UIImageView *flyingBird;
+    UIImage *birdDied;
 }
 -(instancetype)initWithName:(NSString *)name inScene:(Scene *)scene
 {
@@ -20,6 +21,7 @@
     flyingBird = [[UIImageView alloc] initWithFrame:CGRectMake( 0, 0, 50, 35)];
     flyingBird.userInteractionEnabled = YES;
     flyingBird.multipleTouchEnabled = YES;
+    birdDied = [UIImage imageNamed:@"bird1.png"];
     flyingBird.animationImages = @[[UIImage imageNamed:@"bird1.png"],[UIImage imageNamed:@"bird2.png"]];
     flyingBird.animationDuration = 0.5;
     [flyingBird startAnimating];
@@ -52,9 +54,9 @@
     
     if (!self.alive) {
         flyingBird.transform = CGAffineTransformMakeRotation(M_PI_2);
-        [UIView animateWithDuration:0.9 animations:^{
-            self.view.center = CGPointMake(self.view.center.x, [self.view superview].bounds.size.height - 80);
-        } completion:nil];
+        [flyingBird stopAnimating];
+        flyingBird.image = birdDied;
+        [self died];
     }
     else{
         self.view.center = CGPointMake(self.view.center.x, self.view.center.y - jumpVelocity);
@@ -74,6 +76,23 @@
             flyingBird.transform = CGAffineTransformMakeRotation(-M_PI_4*0.1);
         }
     }
+}
+
+-(void)died{
+    
+    [UIView animateWithDuration:0.1 animations:^{
+        if (self.view.center.y < [self.view superview].bounds.size.height - 30 +jumpVelocity) {
+            self.view.center = CGPointMake(self.view.center.x, self.view.center.y - jumpVelocity);
+            jumpVelocity = jumpVelocity - fallAcceleration - 5;
+        }
+        else{
+            self.view.center = CGPointMake(self.view.center.x, [self.view superview].bounds.size.height - 30 + jumpVelocity);
+        }
+    } completion:^(BOOL finished) {
+        if (self.view.center.y < [self.view superview].bounds.size.height - 30 +jumpVelocity) {
+            [self died];
+        }
+    }];
 }
 
 -(void)jump{
