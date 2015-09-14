@@ -8,9 +8,6 @@
 
 #import "TopPipe.h"
 
-#define pipeHeight 350
-#define pipeWidth 60
-
 @implementation TopPipe
 
 -(instancetype)initWithName:(NSString *)name inScene:(Scene *)scene
@@ -18,7 +15,7 @@
     self = [super initWithName:name inScene:scene];
     UIImage *imgPipe = [UIImage imageNamed:@"pipetop.png"];
     
-    UIImageView *pipe = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, pipeWidth, pipeHeight)];
+    UIImageView *pipe = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, [Sprite width], [Sprite height])];
     pipe.image = imgPipe;
     
     self.view = pipe;

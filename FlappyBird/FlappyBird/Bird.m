@@ -17,12 +17,13 @@
 -(instancetype)initWithName:(NSString *)name inScene:(Scene *)scene
 {
     self = [super initWithName:name inScene:scene];
-    flyingBird = [[UIImageView alloc] initWithFrame:CGRectMake( 0, 0, 80, 64)];
+    flyingBird = [[UIImageView alloc] initWithFrame:CGRectMake( 0, 0, 50, 35)];
     flyingBird.userInteractionEnabled = YES;
     flyingBird.multipleTouchEnabled = YES;
     flyingBird.animationImages = @[[UIImage imageNamed:@"bird1.png"],[UIImage imageNamed:@"bird2.png"]];
     flyingBird.animationDuration = 0.5;
     [flyingBird startAnimating];
+    flyingBird.backgroundColor = [UIColor blackColor];
     self.view = flyingBird;
     [self applyGestureRecognizer];
     self.alive = YES;

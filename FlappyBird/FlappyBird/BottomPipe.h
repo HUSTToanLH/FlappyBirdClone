@@ -9,5 +9,4 @@
 #import "Sprite.h"
 
 @interface BottomPipe : Sprite
-
 @end

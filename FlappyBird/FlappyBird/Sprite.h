@@ -24,4 +24,6 @@
                     inScene:(Scene *)scene;
 
 -(void)animate;
++(CGFloat)height;
++(CGFloat)width;
 @end

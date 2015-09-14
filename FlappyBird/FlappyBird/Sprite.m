@@ -8,8 +8,19 @@
 
 #import "Sprite.h"
 
+#define pipeHeight 667
+#define pipeWidth 60
+
 @class Scene;
 @implementation Sprite
+
++(CGFloat)height{
+    return pipeHeight;
+}
+
++(CGFloat)width{
+    return pipeWidth;
+}
 
 -(instancetype)initWithName:(NSString *)name
                     ownView:(UIView *)view

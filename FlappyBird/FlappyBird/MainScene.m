@@ -12,7 +12,7 @@
 #import "Bottom.h"
 #import "Bird.h"
 
-#define spaceForBird 250
+#define spaceForBird 200
 #define spaceForPipe 250
 
 @implementation MainScene
@@ -25,6 +25,9 @@
     CGSize bottomSize;
     NSTimer *timer;
     CGFloat birdJumpSpeed, spaceBottom;
+    CGFloat haftPipe;
+    CGFloat maxTopCenter;
+    CGFloat minTopCenter;
 }
 
 - (void)viewDidLoad {
@@ -120,23 +123,34 @@
 
 -(void)addPipe
 {
+    UIImage *imgBottom = [UIImage imageNamed:@"bottom.png"];
+    spaceBottom = imgBottom.size.height*0.5;
+    
+    haftPipe = [Sprite height]*0.5;
+    maxTopCenter = self.size.height - spaceBottom - spaceForBird - 20 - haftPipe;
+    minTopCenter = 20 - haftPipe;
+    
     pipeTop1 = [[TopPipe alloc] initWithName:@"pipeTop1" inScene:self];
-    pipeTop1.view.center = CGPointMake(self.view.bounds.size.width*2/3, self.view.bounds.size.height*0.5 - spaceBottom - pipeTop1.view.bounds.size.height*0.5 - 200);
+    pipeTop1.view.center = CGPointMake(self.view.bounds.size.width*4/3, [self randomCenterY]);
     
     pipeBottom1 = [[BottomPipe alloc] initWithName:@"pipeBottom1" inScene:self];
-    pipeBottom1.view.center = CGPointMake(pipeTop1.view.center.x, pipeTop1.view.center.y + pipeTop1.view.bounds.size.height + spaceForBird);
+    pipeBottom1.view.center = CGPointMake(pipeTop1.view.center.x, pipeTop1.view.center.y + 2*haftPipe + spaceForBird);
     
     pipeTop2 = [[TopPipe alloc] initWithName:@"pipeTop2" inScene:self];
-    pipeTop2.view.center = CGPointMake(pipeTop1.view.center.x + spaceForPipe, pipeTop1.view.center.y + 50);
+    pipeTop2.view.center = CGPointMake(pipeTop1.view.center.x + spaceForPipe, [self randomCenterY]);
     
     pipeBottom2 = [[BottomPipe alloc] initWithName:@"pipeBottom2" inScene:self];
-    pipeBottom2.view.center = CGPointMake(pipeTop2.view.center.x, pipeTop2.view.center.y + pipeTop2.view.bounds.size.height + spaceForBird);
+    pipeBottom2.view.center = CGPointMake(pipeTop2.view.center.x, pipeTop2.view.center.y + 2*haftPipe + spaceForBird);
     
     //add subview
     [self.view addSubview:pipeTop1.view];
     [self.view addSubview:pipeTop2.view];
     [self.view addSubview:pipeBottom1.view];
     [self.view addSubview:pipeBottom2.view];
+}
+
+-(CGFloat)randomCenterY{
+    return arc4random()%(int)(maxTopCenter - minTopCenter) + minTopCenter;
 }
 
 -(void)movePipeAtSpeed:(CGFloat)speed
@@ -148,19 +162,19 @@
     pipeBottom2.view.center = CGPointMake(pipeBottom2.view.center.x - speed, pipeBottom2.view.center.y);
     
     if (pipeTop1.view.frame.origin.x + pipeTop1.view.bounds.size.width <= 0) {
-        pipeTop1.view.center = CGPointMake(pipeTop2.view.center.x + spaceForPipe, pipeTop1.view.center.y);
+        pipeTop1.view.center = CGPointMake(pipeTop2.view.center.x + spaceForPipe, [self randomCenterY]);
     }
     
     if (pipeTop2.view.frame.origin.x + pipeTop2.view.bounds.size.width <= 0) {
-        pipeTop2.view.center = CGPointMake(pipeTop1.view.center.x + spaceForPipe, pipeTop2.view.center.y);
+        pipeTop2.view.center = CGPointMake(pipeTop1.view.center.x + spaceForPipe, [self randomCenterY]);
     }
     
     if (pipeBottom1.view.frame.origin.x + pipeBottom1.view.bounds.size.width <= 0) {
-        pipeBottom1.view.center = CGPointMake(pipeBottom2.view.center.x + spaceForPipe, pipeBottom1.view.center.y);
+        pipeBottom1.view.center = CGPointMake(pipeBottom2.view.center.x + spaceForPipe, pipeTop1.view.center.y + 2*haftPipe + spaceForBird);
     }
     
     if (pipeBottom2.view.frame.origin.x + pipeBottom2.view.bounds.size.width <= 0) {
-        pipeBottom2.view.center = CGPointMake(pipeBottom1.view.center.x + spaceForPipe, pipeBottom2.view.center.y);
+        pipeBottom2.view.center = CGPointMake(pipeBottom1.view.center.x + spaceForPipe, pipeTop2.view.center.y + 2*haftPipe + spaceForBird);
     }
 }
 
@@ -175,38 +189,12 @@
 
 -(void)playGame{
     //pipe top
-    if (CGRectIntersectsRect(bird.view.frame, pipeTop1.view.frame)) {
-        [self gameOver];
-    }
-    
-    if (CGRectIntersectsRect(bird.view.frame, pipeTop2.view.frame)) {
-        [self gameOver];
-    }
-    
-    //pipe bottom
-    if (CGRectIntersectsRect(bird.view.frame, pipeBottom1.view.frame)) {
-        [self gameOver];
-    }
-    
-    if (CGRectIntersectsRect(bird.view.frame, pipeBottom2.view.frame)) {
+    if (CGRectIntersectsRect(bird.view.frame, pipeTop1.view.frame) || CGRectIntersectsRect(bird.view.frame, pipeTop2.view.frame) || CGRectIntersectsRect(bird.view.frame, pipeBottom1.view.frame) || CGRectIntersectsRect(bird.view.frame, pipeBottom2.view.frame)) {
         [self gameOver];
     }
     
     //top
-    if (CGRectIntersectsRect(bird.view.frame, top1.view.frame)) {
-        [self gameOver];
-    }
-    
-    if (CGRectIntersectsRect(bird.view.frame, top2.view.frame)) {
-        [self gameOver];
-    }
-    
-    //bottom
-    if (CGRectIntersectsRect(bird.view.frame, bottom1.view.frame)) {
-        [self gameOver];
-    }
-    
-    if (CGRectIntersectsRect(bird.view.frame, bottom2.view.frame)) {
+    if (CGRectIntersectsRect(bird.view.frame, top1.view.frame) || CGRectIntersectsRect(bird.view.frame, top2.view.frame) || CGRectIntersectsRect(bird.view.frame, bottom1.view.frame) || CGRectIntersectsRect(bird.view.frame, bottom2.view.frame)) {
         [self gameOver];
     }
 }
@@ -222,7 +210,7 @@
     [self movePipeAtSpeed:birdJumpSpeed];
     [self playGame];
     
-    if (bird.view.center.y >= self.size.height - 50) {
+    if (bird.view.center.y >= self.size.height - spaceBottom) {
         [self gameOver];
     }
     [bird animate];
