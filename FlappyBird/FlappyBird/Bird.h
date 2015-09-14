@@ -12,4 +12,5 @@
 @property(nonatomic, assign) BOOL alive;
 @property(nonatomic, assign) CGFloat y0;
 @property(nonatomic, assign) BOOL fly;
+@property(nonatomic, strong) NSTimer *birdFallTimer;
 @end

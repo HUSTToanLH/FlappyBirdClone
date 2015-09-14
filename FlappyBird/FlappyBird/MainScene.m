@@ -43,8 +43,9 @@
     
     [self addBackground];
     [self addPipe];
-    [self addBottom];
     [self addBird];
+    [self addBottom];
+    
     
     timer = [NSTimer scheduledTimerWithTimeInterval:0.05
                                              target:self
@@ -202,6 +203,7 @@
 -(void)gameOver{
     [timer invalidate];
     bird.alive = NO;
+    [bird animate];
 }
 
 -(void)gameLoop
@@ -213,6 +215,7 @@
     if (bird.view.center.y >= self.size.height - spaceBottom) {
         [self gameOver];
     }
+    
     [bird animate];
     
 }

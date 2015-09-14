@@ -51,25 +51,28 @@
     }
     
     if (!self.alive) {
-        jumpVelocity = 0;
-        fallAcceleration = 0;
+        flyingBird.transform = CGAffineTransformMakeRotation(M_PI_2);
+        [UIView animateWithDuration:0.9 animations:^{
+            self.view.center = CGPointMake(self.view.center.x, [self.view superview].bounds.size.height - 80);
+        } completion:nil];
     }
-    
-    self.view.center = CGPointMake(self.view.center.x, self.view.center.y - jumpVelocity);
-    jumpVelocity = jumpVelocity - fallAcceleration;
-    
-    if (jumpVelocity < -15) {
-        jumpVelocity = -15;
-    }
-    
-    if (jumpVelocity <= 0) {
-//        [UIView animateWithDuration:1 animations:^{
-//            flyingBird.transform = CGAffineTransformMakeRotation(M_PI_2);
-//        } completion:nil];
-    }
-    
-    if (jumpVelocity > 0) {
-        flyingBird.transform = CGAffineTransformMakeRotation(-M_PI_4*0.3);
+    else{
+        self.view.center = CGPointMake(self.view.center.x, self.view.center.y - jumpVelocity);
+        jumpVelocity = jumpVelocity - fallAcceleration;
+        
+        if (jumpVelocity < -15) {
+            jumpVelocity = -15;
+        }
+        
+        if (jumpVelocity <= 0) {
+            [UIView animateWithDuration:1 animations:^{
+                flyingBird.transform = CGAffineTransformMakeRotation(M_PI_2);
+            } completion:nil];
+        }
+        
+        if (jumpVelocity > 0) {
+            flyingBird.transform = CGAffineTransformMakeRotation(-M_PI_4*0.1);
+        }
     }
 }
 
