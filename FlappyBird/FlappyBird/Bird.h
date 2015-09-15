@@ -14,4 +14,5 @@
 @property(nonatomic, assign) BOOL fly;
 @property(nonatomic, strong) NSTimer *birdFallTimer;
 -(void)pointSound;
+-(void)jump;
 @end

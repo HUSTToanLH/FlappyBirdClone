@@ -7,40 +7,55 @@
 //
 
 #import "Bird.h"
+#import "MainScene.h"
 #import <AVFoundation/AVFoundation.h>
+
+#define JUMP_VELOCITY 25.0
+#define FALL_ACCELERATION 6.0
+#define BIRD_1 @"bird1.png"
+#define BIRD_2 @"bird2.png"
 
 @implementation Bird
 {
-    BOOL isJumping, isClick;
-    CGFloat jumpVelocity, fallAcceleration, centerYJumping;
+    BOOL isJumping;
+    CGFloat jumpVelocity, centerYJumping, mainHeight, bottomHeight;
     UIImageView *flyingBird;
     UIImage *birdDied;
-    
+    MainScene *main;
     AVAudioPlayer* wing, *die, *hit, *point, *swooshing;
 }
+
 -(instancetype)initWithName:(NSString *)name inScene:(Scene *)scene
 {
     self = [super initWithName:name inScene:scene];
-    flyingBird = [[UIImageView alloc] initWithFrame:CGRectMake( 0, 0, 50, 35)];
+    flyingBird = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 50, 35)];
+    flyingBird.animationImages = @[[UIImage imageNamed:BIRD_1],[UIImage imageNamed:BIRD_2]];
+    flyingBird.animationDuration = 0.25;
+    [flyingBird startAnimating];
+    
     flyingBird.userInteractionEnabled = YES;
     flyingBird.multipleTouchEnabled = YES;
-    birdDied = [UIImage imageNamed:@"bird1.png"];
-    flyingBird.animationImages = @[[UIImage imageNamed:@"bird1.png"],[UIImage imageNamed:@"bird2.png"]];
-    flyingBird.animationDuration = 0.5;
-    [flyingBird startAnimating];
-    flyingBird.backgroundColor = [UIColor blackColor];
-    self.view = flyingBird;
     [self applyGestureRecognizer];
-    self.alive = YES;
-    isClick = YES;
     
-    [self wingBird];
-    [self dieBird];
-    [self hitBird];
-    [self pointBird];
-    [self swooshingBird];
+    self.view = flyingBird;
+    self.alive = YES;
+    
+    main = (MainScene*)[UIApplication sharedApplication].keyWindow.rootViewController.childViewControllers[0];
+    mainHeight = main.height;
+    bottomHeight = main.bottomHeight;
+    
+    birdDied = [UIImage imageNamed:BIRD_1];
+    [self initSound];
     
     return self;
+}
+
+-(void)initSound{
+    [self initWingSound];
+    [self initDieSound];
+    [self initHitSound];
+    [self initPointSound];
+    [self initSwooshingSound];
 }
 
 -(void)applyGestureRecognizer{
@@ -50,9 +65,7 @@
 
 -(void)startJump{
     if (!isJumping) {
-//        isJumping = NO;
-        jumpVelocity = 30.0;
-        fallAcceleration = 6.0;
+        jumpVelocity = JUMP_VELOCITY;
     }
 }
 
@@ -67,7 +80,7 @@
     }
     else{
         self.view.center = CGPointMake(self.view.center.x, self.view.center.y - jumpVelocity);
-        jumpVelocity = jumpVelocity - fallAcceleration;
+        jumpVelocity = jumpVelocity - FALL_ACCELERATION;
         
         if (jumpVelocity < -15) {
             jumpVelocity = -15;
@@ -82,19 +95,28 @@
 }
 
 -(void)died{
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, main.view.bounds.size.width, main.view.bounds.size.height)];
+    view.backgroundColor = [UIColor blackColor];
+    view.alpha = 0.5;
+//    [UIView animateWithDuration:0.01 animations:^{
+//        [main.view addSubview:view];
+//    } completion:^(BOOL finished) {
+//        [view removeFromSuperview];
+//    }];
     
     [UIView animateWithDuration:0.1 animations:^{
-        if (self.view.center.y < [self.view superview].bounds.size.height - 30 +jumpVelocity) {
-            self.view.center = CGPointMake(self.view.center.x, self.view.center.y - jumpVelocity);
-            jumpVelocity = jumpVelocity - fallAcceleration - 5;
-        }
-        else{
-            self.view.center = CGPointMake(self.view.center.x, [self.view superview].bounds.size.height - 30 + jumpVelocity);
-        }
+        self.view.center = CGPointMake(self.view.center.x, self.view.center.y - jumpVelocity);
+        jumpVelocity = jumpVelocity - FALL_ACCELERATION;
+        
     } completion:^(BOOL finished) {
-        if (self.view.center.y < [self.view superview].bounds.size.height - 30 +jumpVelocity) {
+        
+        if (self.view.center.y < mainHeight - bottomHeight - 11) {
             [self died];
         }
+        else{
+            self.view.center = CGPointMake(self.view.center.x, mainHeight - bottomHeight - 11);
+        }
+        
     }];
 }
 
@@ -102,14 +124,18 @@
     if (!self.alive) {
         return;
     }
+    
+    if (main.play == NO) {
+        [main startTimer];
+    }
     flyingBird.transform = CGAffineTransformMakeRotation(-M_PI_4*0.5);
-    centerYJumping = self.view.center.y;
+    centerYJumping = self.view.center.y + JUMP_VELOCITY;
 
     [wing play];
-    jumpVelocity = 30.0;
+    jumpVelocity = JUMP_VELOCITY;
 }
 
--(void)wingBird
+-(void)initWingSound
 {
     NSString* filePath = [[NSBundle mainBundle] pathForResource:@"sfx_wing" ofType:@"mp3"];
     NSURL *url = [NSURL fileURLWithPath:filePath];
@@ -119,7 +145,7 @@
     [wing prepareToPlay];
 }
 
--(void)dieBird
+-(void)initDieSound
 {
     NSString* filePath = [[NSBundle mainBundle] pathForResource:@"sfx_die" ofType:@"mp3"];
     NSURL *url = [NSURL fileURLWithPath:filePath];
@@ -129,7 +155,7 @@
     [die prepareToPlay];
 }
 
--(void)hitBird
+-(void)initHitSound
 {
     NSString* filePath = [[NSBundle mainBundle] pathForResource:@"sfx_hit" ofType:@"mp3"];
     NSURL *url = [NSURL fileURLWithPath:filePath];
@@ -139,7 +165,7 @@
     [hit prepareToPlay];
 }
 
--(void)pointBird
+-(void)initPointSound
 {
     NSString* filePath = [[NSBundle mainBundle] pathForResource:@"sfx_point" ofType:@"mp3"];
     NSURL *url = [NSURL fileURLWithPath:filePath];
@@ -149,7 +175,7 @@
     [point prepareToPlay];
 }
 
--(void)swooshingBird
+-(void)initSwooshingSound
 {
     NSString* filePath = [[NSBundle mainBundle] pathForResource:@"sfx_swooshing" ofType:@"mp3"];
     NSURL *url = [NSURL fileURLWithPath:filePath];

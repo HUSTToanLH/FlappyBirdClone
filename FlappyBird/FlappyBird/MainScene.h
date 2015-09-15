@@ -10,5 +10,8 @@
 #import "Scene.h"
 
 @interface MainScene : Scene
-
+@property(nonatomic,assign) CGFloat height;
+@property(nonatomic,assign) CGFloat bottomHeight;
+@property(nonatomic,assign) BOOL play;
+- (void)startTimer;
 @end
