@@ -27,7 +27,7 @@
     BottomPipe *pipeBottom1, *pipeBottom2;
     Bottom *bottom1, *bottom2, *top1, *top2;
     
-    UILabel *score, *hightscore ;
+    UILabel *endScore, *hightscore ;
     CGSize bottomSize;
     NSTimer *timer;
     CGFloat birdJumpSpeed;
@@ -35,7 +35,8 @@
     CGFloat maxTopCenter;
     CGFloat minTopCenter;
     CGFloat spaceForBirdChange;
-    UIButton *start;
+    UIButton *start, *share;
+    UIImageView *newScore;
     BOOL restart, resetFramePipe;
     int point;
     NSInteger hightScore;
@@ -76,13 +77,11 @@
     
     [self addBackground];
     [self addPipe];
+    [self addLogoAndGuide];
+    [self addEndView];
     [self addBird];
     [self addTopAndBottom];
     [self addScoreLabel];
-    
-    if (!restart) {
-        [self addButtonStart];
-    }
 }
 
 #pragma mark - init subviews
@@ -123,12 +122,64 @@
     resetFramePipe = YES;
 }
 
+-(void)addLogoAndGuide{
+    _startView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.size.width*0.5, self.size.height*0.5)];
+    _startView.center = CGPointMake(self.size.width*0.5, self.size.height*0.5);
+    _startView.backgroundColor = [UIColor clearColor];
+    
+    UIImage *logoImg = [UIImage imageNamed:@"logo.png"];
+    UIImageView *logo = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.size.width*0.5, self.size.width*0.5*(logoImg.size.height/logoImg.size.width))];
+    logo.image = logoImg;
+    [_startView addSubview:logo];
+    
+    UIImage *guideImg = [UIImage imageNamed:@"guide.png"];
+    CGSize size = CGSizeMake(self.size.height*0.2,self.size.height*0.2*(728/572)+25);
+    
+    UIImageView *guide = [[UIImageView alloc] initWithFrame:CGRectMake(self.size.width*0.5 - size.width, logo.bounds.size.height + 20, size.width,size.height)];
+    guide.image = guideImg;
+    [_startView addSubview:guide];
+    
+    [self.view addSubview:_startView];
+}
+
+-(void)addEndView{
+    UIImage *gameOverImg = [UIImage imageNamed:@"gameover.png"];
+    _endView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.size.width-60, (self.size.width-60)*(gameOverImg.size.height/gameOverImg.size.width))];
+    _endView.center = CGPointMake(self.size.width*0.5, -self.size.height*0.5);
+    _endView.backgroundColor = [UIColor clearColor];
+    
+    UIImageView *gameOver = [[UIImageView alloc] initWithFrame:_endView.bounds];
+    gameOver.image = gameOverImg;
+    [_endView addSubview:gameOver];
+    
+    UIImage *okImg = [UIImage imageNamed:@"okButton.png"];
+    CGSize okSize = CGSizeMake((_endView.bounds.size.width - 60)/2, (_endView.bounds.size.width - 60)*(okImg.size.height/okImg.size.width)/2);
+    start = [[UIButton alloc] initWithFrame:CGRectMake(15, _endView.bounds.size.height - okSize.height, okSize.width,okSize.height)];
+    [start setImage:okImg forState:UIControlStateNormal];
+    [_endView addSubview:start];
+    [start addTarget:self action:@selector(onClickStart) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIImage *shareImg = [UIImage imageNamed:@"shareButton.png"];
+    share = [[UIButton alloc] initWithFrame:CGRectMake(_endView.bounds.size.width - 15 - okSize.width, _endView.bounds.size.height - okSize.height, okSize.width,okSize.height)];
+    [share setImage:shareImg forState:UIControlStateNormal];
+    [_endView addSubview:share];
+    [share addTarget:self action:@selector(onClickShare) forControlEvents:UIControlEventTouchUpInside];
+
+    UIImage *newImg = [UIImage imageNamed:@"newLabel.png"];
+    newScore = [[UIImageView alloc] initWithFrame:CGRectMake(180, 170, 50, 50*(newImg.size.height/newImg.size.width))];
+    newScore.image = newImg;
+    newScore.hidden = YES;
+    [_endView addSubview:newScore];
+    
+    [self.view addSubview:_endView];
+}
+
 -(void)addBird
 {
     bird = [[Bird alloc] initWithName:@"bird"
                               inScene:self];
     bird.y0 = (self.size.height - bird.view.bounds.size.height)*0.5;
-    bird.view.center = CGPointMake(self.size.width*0.5, bird.y0);
+    bird.view.center = CGPointMake(self.size.width*2/5 - 10, bird.y0);
     [self.view addSubview:bird.view];
     bird.alive = YES;
 }
@@ -168,45 +219,42 @@
 }
 
 -(void)addScoreLabel{
-    score = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 40, 60)];
-    score.center = CGPointMake(self.size.width *0.5, self.size.height *0.5 - 250);
-    score.backgroundColor = [UIColor clearColor];
-    score.text = @"0";
-    score.font = [UIFont fontWithName:@"Hevetica-Bold" size:30];
-    score.textAlignment = NSTextAlignmentCenter;
-    score.textColor = [UIColor blackColor];
-    [self.view addSubview:score];
-//    score.hidden = YES;
+    _score = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 40, 60)];
+    _score.center = CGPointMake(self.size.width *0.5, self.size.height *0.5 - 250);
+    _score.backgroundColor = [UIColor clearColor];
+    _score.text = @"0";
+    _score.font = [UIFont fontWithName:@"Hevetica-Bold" size:30];
+    _score.textAlignment = NSTextAlignmentCenter;
+    _score.textColor = [UIColor blackColor];
+    [self.view addSubview:_score];
+    _score.hidden = YES;
     
-    hightscore = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 40, 60)];
-//    hightscore.center = CGPointMake(self.size.width *0.5, self.size.height *0.5 - 150);
+    //set score for end view
+    endScore = [[UILabel alloc] initWithFrame:CGRectMake(250, 140, 40, 20)];
+    endScore.backgroundColor = [UIColor clearColor];
+    endScore.text = _score.text;
+    endScore.font = [UIFont fontWithName:@"Hevetica-Bold" size:30];
+    endScore.textAlignment = NSTextAlignmentCenter;
+    endScore.textColor = [UIColor blackColor];
+//    [endScore sizeToFit];// set label size follow text
+    [_endView addSubview:endScore];
+    
+    hightscore = [[UILabel alloc] initWithFrame:CGRectMake(250, 200, 40, 20)];
     hightscore.backgroundColor = [UIColor clearColor];
     hightscore.text = [[NSString alloc] initWithFormat:@"%ld", (long)hightScore];
     hightscore.font = [UIFont fontWithName:@"Hevetica-Bold" size:30];
     hightscore.textAlignment = NSTextAlignmentCenter;
     hightscore.textColor = [UIColor blackColor];
-    [hightscore sizeToFit];
-    [self.view addSubview:hightscore];
-}
-
--(void)addButtonStart{
-    start = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 80, 30)];
-    start.center = CGPointMake(self.size.width *0.5, self.size.height *0.5 - 60);
-    start.backgroundColor = [UIColor blueColor];
-    [start setTitle:@"START" forState:UIControlStateNormal];
-    start.titleLabel.font = [UIFont fontWithName:@"Arial" size:13];
-    [self.view addSubview:start];
-    [start addTarget:self action:@selector(onClick) forControlEvents:UIControlEventTouchUpInside];
-    start.hidden = YES;
+//    [hightscore sizeToFit];
+    [_endView addSubview:hightscore];
 }
 
 #pragma mark - common function
 
--(void)onClick{
+-(void)onClickStart{
     _play = NO;
-    start.hidden = YES;
-    score.hidden = NO;
-    [self.view bringSubviewToFront:score];
+    _score.hidden = NO;
+    [self.view bringSubviewToFront:_score];
     if (restart) {
         [self removeAllSubview];
         [self initSubview];
@@ -215,6 +263,10 @@
     restart = NO;
 //    [self startTimer];
 //    [bird jump];
+}
+
+-(void)onClickShare{
+    
 }
 
 -(void)removeAllSubview{
@@ -257,9 +309,11 @@
 
 -(void)setScore{
     point++;
-    score.text = [[NSString alloc] initWithFormat:@"%d", point];
+    _score.text = [[NSString alloc] initWithFormat:@"%d", point];
+    endScore.text = _score.text;
     if (point > hightScore) {
         hightScore = point;
+        newScore.hidden = NO;
         hightscore.text = [[NSString alloc] initWithFormat:@"%ld", (long)hightScore];
         [[NSUserDefaults standardUserDefaults] setInteger:point forKey:@"HightScore"];
     }
@@ -337,12 +391,20 @@
 -(void)playGame{
     //pipe top
     if (CGRectIntersectsRect(bird.view.frame, pipeTop1.view.frame) || CGRectIntersectsRect(bird.view.frame, pipeTop2.view.frame) || CGRectIntersectsRect(bird.view.frame, pipeBottom1.view.frame) || CGRectIntersectsRect(bird.view.frame, pipeBottom2.view.frame)) {
+        self.hit = YES;
         [self gameOver];
         return;
     }
     
     //top
-    if (CGRectIntersectsRect(bird.view.frame, top1.view.frame) || CGRectIntersectsRect(bird.view.frame, top2.view.frame) || CGRectIntersectsRect(bird.view.frame, bottom1.view.frame) || CGRectIntersectsRect(bird.view.frame, bottom2.view.frame)) {
+    if (CGRectIntersectsRect(bird.view.frame, top1.view.frame) || CGRectIntersectsRect(bird.view.frame, top2.view.frame)) {
+        self.hit = YES;
+        [self gameOver];
+        return;
+    }
+    
+    if (CGRectIntersectsRect(bird.view.frame, bottom1.view.frame) || CGRectIntersectsRect(bird.view.frame, bottom2.view.frame)) {
+        self.hit = NO;
         [self gameOver];
         return;
     }
@@ -360,11 +422,7 @@
     [self stopTimer];
     bird.alive = NO;
     [bird animate];
-    [start setTitle:@"RESTART" forState:UIControlStateNormal];
     restart = YES;
-    start.hidden = NO;
-    [self.view addSubview:start];
-    [self.view addSubview:score];
 }
 
 -(void)gameLoop

@@ -13,5 +13,9 @@
 @property(nonatomic,assign) CGFloat height;
 @property(nonatomic,assign) CGFloat bottomHeight;
 @property(nonatomic,assign) BOOL play;
+@property(nonatomic,assign) BOOL hit;
+@property(nonatomic,strong) IBOutlet UIView *startView;
+@property(nonatomic,strong) IBOutlet UIView *endView;
+@property(nonatomic,strong) IBOutlet UILabel *score;
 - (void)startTimer;
 @end

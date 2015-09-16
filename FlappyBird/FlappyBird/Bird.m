@@ -41,14 +41,32 @@
     self.view = flyingBird;
     self.alive = YES;
     
-    main = [AppDelegate getMainView];
+//    main = [AppDelegate getMainView];
+    UINavigationController *nav=(UINavigationController *)((AppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController;
+    main=(MainScene *)[nav.viewControllers objectAtIndex:0];
     mainHeight = main.height;
     bottomHeight = main.bottomHeight;
     
     birdDied = [UIImage imageNamed:BIRD_1];
     [self initSound];
-    
+    [self animateBirdStart];
     return self;
+}
+
+-(void)animateBirdStart{
+    [UIView animateWithDuration:0.8 animations:^{
+        flyingBird.center = CGPointMake(flyingBird.center.x, flyingBird.center.y + 20);
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration:0.8 animations:^{
+            flyingBird.center = CGPointMake(flyingBird.center.x, flyingBird.center.y +- 20);
+        } completion:^(BOOL finished) {
+            if (!isJumping) {
+                [self animateBirdStart];
+            }
+            
+        }];
+        
+    }];
 }
 
 -(void)initSound{
@@ -75,8 +93,21 @@
         flyingBird.transform = CGAffineTransformMakeRotation(M_PI_2);
         [flyingBird stopAnimating];
         flyingBird.image = birdDied;
-        [hit play];
+        if (main.hit) {
+            [hit play];
+        }
         [die play];
+        
+        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, main.view.bounds.size.width, main.view.bounds.size.height)];
+        view.backgroundColor = [UIColor blackColor];
+        [main.view addSubview:view];
+        view.alpha = 1;
+        [UIView animateWithDuration:0.02 animations:^{
+            view.alpha = 0;
+        } completion:^(BOOL finished) {
+            [view removeFromSuperview];
+        }];
+        
         [self died];
     }
     else{
@@ -96,14 +127,7 @@
 }
 
 -(void)died{
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, main.view.bounds.size.width, main.view.bounds.size.height)];
-    view.backgroundColor = [UIColor blackColor];
-    view.alpha = 0.5;
-//    [UIView animateWithDuration:0.01 animations:^{
-//        [main.view addSubview:view];
-//    } completion:^(BOOL finished) {
-//        [view removeFromSuperview];
-//    }];
+    main.score.hidden = YES;
     
     [UIView animateWithDuration:0.1 animations:^{
         self.view.center = CGPointMake(self.view.center.x, self.view.center.y - jumpVelocity);
@@ -119,15 +143,21 @@
         }
         
     }];
+    
+    [UIView animateWithDuration:0.5 animations:^{
+        main.endView.center = CGPointMake(main.size.width*0.5, main.size.height*0.5 - 50);
+    } completion:nil];
 }
 
 -(void)jump{
     if (!self.alive) {
         return;
     }
-    
+    isJumping = YES;
     if (main.play == NO) {
         [main startTimer];
+        main.score.hidden = NO;
+        main.startView.hidden = YES;
     }
     flyingBird.transform = CGAffineTransformMakeRotation(-M_PI_4*0.5);
     centerYJumping = self.view.center.y + JUMP_VELOCITY;
