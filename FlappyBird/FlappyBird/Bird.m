@@ -8,6 +8,7 @@
 
 #import "Bird.h"
 #import "MainScene.h"
+#import "AppDelegate.h"
 #import <AVFoundation/AVFoundation.h>
 
 #define JUMP_VELOCITY 25.0
@@ -40,7 +41,7 @@
     self.view = flyingBird;
     self.alive = YES;
     
-    main = (MainScene*)[UIApplication sharedApplication].keyWindow.rootViewController.childViewControllers[0];
+    main = [AppDelegate getMainView];
     mainHeight = main.height;
     bottomHeight = main.bottomHeight;
     
