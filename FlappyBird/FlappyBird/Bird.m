@@ -127,7 +127,8 @@
 }
 
 -(void)died{
-    main.score.hidden = YES;
+    main.runScore.hidden = YES;
+    main.pause.hidden = YES;
     
     [UIView animateWithDuration:0.1 animations:^{
         self.view.center = CGPointMake(self.view.center.x, self.view.center.y - jumpVelocity);
@@ -156,7 +157,8 @@
     isJumping = YES;
     if (main.play == NO) {
         [main startTimer];
-        main.score.hidden = NO;
+        main.runScore.hidden = NO;
+        main.pause.hidden = NO;
         main.startView.hidden = YES;
     }
     flyingBird.transform = CGAffineTransformMakeRotation(-M_PI_4*0.5);

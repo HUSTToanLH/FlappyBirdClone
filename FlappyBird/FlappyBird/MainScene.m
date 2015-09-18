@@ -12,7 +12,8 @@
 #import "Bottom.h"
 #import "Bird.h"
 
-#define spaceForBird 200 //deascending for hard
+
+#define spaceForBird 160 //deascending for hard
 #define spaceForPipe 260 //deascending for hard
 #define jumpSpeed 7.0 //ascending for hard
 #define timerLoop 0.05
@@ -27,7 +28,6 @@
     BottomPipe *pipeBottom1, *pipeBottom2;
     Bottom *bottom1, *bottom2, *top1, *top2;
     
-    UILabel *endScore, *hightscore ;
     CGSize bottomSize;
     NSTimer *timer;
     CGFloat birdJumpSpeed;
@@ -37,9 +37,10 @@
     CGFloat spaceForBirdChange;
     UIButton *start, *share;
     UIImageView *newScore;
-    BOOL restart, resetFramePipe;
+    BOOL restart, resetFramePipe, gamePause;
     int point;
     NSInteger hightScore;
+    Score *endScore, *endHightScore;
 }
 
 #pragma mark - init main
@@ -56,6 +57,7 @@
     //init content
     [self setHightScore];
     restart = NO;
+    gamePause = NO;
     [self initSubview];
     
 }
@@ -81,7 +83,8 @@
     [self addEndView];
     [self addBird];
     [self addTopAndBottom];
-    [self addScoreLabel];
+    [self addScoreImage];
+    [self addPauseAndExitButton];
 }
 
 #pragma mark - init subviews
@@ -218,55 +221,79 @@
     [self.view addSubview:top2.view];
 }
 
--(void)addScoreLabel{
-    _score = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 40, 60)];
-    _score.center = CGPointMake(self.size.width *0.5, self.size.height *0.5 - 250);
-    _score.backgroundColor = [UIColor clearColor];
-    _score.text = @"0";
-    _score.font = [UIFont fontWithName:@"Hevetica-Bold" size:30];
-    _score.textAlignment = NSTextAlignmentCenter;
-    _score.textColor = [UIColor blackColor];
-    [self.view addSubview:_score];
-    _score.hidden = YES;
+-(void)addScoreImage{
+    _runScore = [[Score alloc] initWithFrame:CGRectMake(0, 0, 40, 60)];
+    _runScore.backgroundColor = [UIColor clearColor];
+    _runScore = [_runScore getNumber:0];
+    _runScore.center = CGPointMake(self.size.width *0.5, self.size.height *0.5 - 250);
+    _runScore.hidden = YES;
+    [self.view addSubview:_runScore];
     
     //set score for end view
-    endScore = [[UILabel alloc] initWithFrame:CGRectMake(250, 140, 40, 20)];
+    endScore = [[Score alloc] initWithFrame:CGRectMake(250, 140, 40, 20)];
     endScore.backgroundColor = [UIColor clearColor];
-    endScore.text = _score.text;
-    endScore.font = [UIFont fontWithName:@"Hevetica-Bold" size:30];
-    endScore.textAlignment = NSTextAlignmentCenter;
-    endScore.textColor = [UIColor blackColor];
-//    [endScore sizeToFit];// set label size follow text
+    endScore = [endScore getNumber:0];
     [_endView addSubview:endScore];
     
-    hightscore = [[UILabel alloc] initWithFrame:CGRectMake(250, 200, 40, 20)];
-    hightscore.backgroundColor = [UIColor clearColor];
-    hightscore.text = [[NSString alloc] initWithFormat:@"%ld", (long)hightScore];
-    hightscore.font = [UIFont fontWithName:@"Hevetica-Bold" size:30];
-    hightscore.textAlignment = NSTextAlignmentCenter;
-    hightscore.textColor = [UIColor blackColor];
-//    [hightscore sizeToFit];
-    [_endView addSubview:hightscore];
+    endHightScore = [[Score alloc] initWithFrame:CGRectMake(250, 200, 40, 20)];
+    endHightScore.backgroundColor = [UIColor clearColor];
+    endHightScore = [endHightScore getNumber:(int)hightScore];
+    [_endView addSubview:endHightScore];
+}
+
+-(void)addPauseAndExitButton{
+    _pause = [[UIButton alloc] initWithFrame:CGRectMake(15, 15, 25, 25)];
+    UIImage *pauseImg = [UIImage imageNamed:@"pauseButton.png"];
+    [_pause setImage:pauseImg forState:UIControlStateNormal];
+    [_pause addTarget:self action:@selector(onClickPause) forControlEvents:UIControlEventTouchUpInside];
+    _pause.hidden = YES;
+    [self.view addSubview:_pause];
+    
+    UIButton *exit = [[UIButton alloc] initWithFrame:CGRectMake(self.size.width - 40, 15, 25, 25)];
+    UIImage *exitImg = [UIImage imageNamed:@"exitButton.png"];
+    [exit setImage:exitImg forState:UIControlStateNormal];
+    [exit addTarget:self action:@selector(onClickExit) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:exit];
+    
+    
 }
 
 #pragma mark - common function
 
 -(void)onClickStart{
     _play = NO;
-    _score.hidden = NO;
-    [self.view bringSubviewToFront:_score];
+    _runScore.hidden = NO;
+    _pause.hidden = NO;
+    [self.view bringSubviewToFront:_runScore];
     if (restart) {
         [self removeAllSubview];
         [self initSubview];
         [self.view setNeedsDisplay];
     }
     restart = NO;
-//    [self startTimer];
-//    [bird jump];
 }
 
 -(void)onClickShare{
     
+}
+
+-(void)onClickPause{
+    if (gamePause) {
+        gamePause = NO;
+        [self startTimer];
+        UIImage *pauseImg = [UIImage imageNamed:@"pauseButton.png"];
+        [_pause setImage:pauseImg forState:UIControlStateNormal];
+    }
+    else{
+        gamePause = YES;
+        [self stopTimer];
+        UIImage *playImg = [UIImage imageNamed:@"playButton.png"];
+        [_pause setImage:playImg forState:UIControlStateNormal];
+    }
+}
+
+-(void)onClickExit{
+    exit(0);
 }
 
 -(void)removeAllSubview{
@@ -309,12 +336,14 @@
 
 -(void)setScore{
     point++;
-    _score.text = [[NSString alloc] initWithFormat:@"%d", point];
-    endScore.text = _score.text;
+    _runScore = [_runScore getNumber:point];
+    _runScore.center = CGPointMake(self.size.width *0.5, self.size.height *0.5 - 250);
+    endScore = [endScore getNumber:point];
     if (point > hightScore) {
         hightScore = point;
         newScore.hidden = NO;
-        hightscore.text = [[NSString alloc] initWithFormat:@"%ld", (long)hightScore];
+        
+        endHightScore = [endHightScore getNumber:(int)hightScore];
         [[NSUserDefaults standardUserDefaults] setInteger:point forKey:@"HightScore"];
     }
     

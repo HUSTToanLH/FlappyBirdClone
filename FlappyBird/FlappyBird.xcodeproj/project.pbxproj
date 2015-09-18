@@ -21,6 +21,20 @@
 		FAA8AFD41BA9DC7F00DB43EF /* newLabel.png in Resources */ = {isa = PBXBuildFile; fileRef = FAA8AFD01BA9DC7F00DB43EF /* newLabel.png */; };
 		FAA8AFD51BA9DC7F00DB43EF /* okButton.png in Resources */ = {isa = PBXBuildFile; fileRef = FAA8AFD11BA9DC7F00DB43EF /* okButton.png */; };
 		FAA8AFD61BA9DC7F00DB43EF /* shareButton.png in Resources */ = {isa = PBXBuildFile; fileRef = FAA8AFD21BA9DC7F00DB43EF /* shareButton.png */; };
+		FAB9F05F1BAAF482002D29E2 /* numberEight.png in Resources */ = {isa = PBXBuildFile; fileRef = FAB9F0551BAAF482002D29E2 /* numberEight.png */; };
+		FAB9F0601BAAF482002D29E2 /* numberFive.png in Resources */ = {isa = PBXBuildFile; fileRef = FAB9F0561BAAF482002D29E2 /* numberFive.png */; };
+		FAB9F0611BAAF482002D29E2 /* numberFour.png in Resources */ = {isa = PBXBuildFile; fileRef = FAB9F0571BAAF482002D29E2 /* numberFour.png */; };
+		FAB9F0621BAAF482002D29E2 /* numberNine.png in Resources */ = {isa = PBXBuildFile; fileRef = FAB9F0581BAAF482002D29E2 /* numberNine.png */; };
+		FAB9F0631BAAF482002D29E2 /* numberOne.png in Resources */ = {isa = PBXBuildFile; fileRef = FAB9F0591BAAF482002D29E2 /* numberOne.png */; };
+		FAB9F0641BAAF482002D29E2 /* numberSeven.png in Resources */ = {isa = PBXBuildFile; fileRef = FAB9F05A1BAAF482002D29E2 /* numberSeven.png */; };
+		FAB9F0651BAAF482002D29E2 /* numberSix.png in Resources */ = {isa = PBXBuildFile; fileRef = FAB9F05B1BAAF482002D29E2 /* numberSix.png */; };
+		FAB9F0661BAAF482002D29E2 /* numberThree.png in Resources */ = {isa = PBXBuildFile; fileRef = FAB9F05C1BAAF482002D29E2 /* numberThree.png */; };
+		FAB9F0671BAAF482002D29E2 /* numberTwo.png in Resources */ = {isa = PBXBuildFile; fileRef = FAB9F05D1BAAF482002D29E2 /* numberTwo.png */; };
+		FAB9F06C1BAAF505002D29E2 /* Score.m in Sources */ = {isa = PBXBuildFile; fileRef = FAB9F06B1BAAF505002D29E2 /* Score.m */; };
+		FAB9F06E1BAB12A8002D29E2 /* numberZero.png in Resources */ = {isa = PBXBuildFile; fileRef = FAB9F06D1BAB12A8002D29E2 /* numberZero.png */; };
+		FAB9F0711BAB1AC6002D29E2 /* pauseButton.png in Resources */ = {isa = PBXBuildFile; fileRef = FAB9F06F1BAB1AC6002D29E2 /* pauseButton.png */; };
+		FAB9F0721BAB1AC6002D29E2 /* playButton.png in Resources */ = {isa = PBXBuildFile; fileRef = FAB9F0701BAB1AC6002D29E2 /* playButton.png */; };
+		FAB9F0741BAB1DAF002D29E2 /* exitButton.png in Resources */ = {isa = PBXBuildFile; fileRef = FAB9F0731BAB1DAF002D29E2 /* exitButton.png */; };
 		FABFE2431BA488C6008EE6C3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FABFE2421BA488C6008EE6C3 /* main.m */; };
 		FABFE2461BA488C6008EE6C3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FABFE2451BA488C6008EE6C3 /* AppDelegate.m */; };
 		FABFE24E1BA488C6008EE6C3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FABFE24D1BA488C6008EE6C3 /* Images.xcassets */; };
@@ -67,6 +81,21 @@
 		FAA8AFD01BA9DC7F00DB43EF /* newLabel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = newLabel.png; sourceTree = "<group>"; };
 		FAA8AFD11BA9DC7F00DB43EF /* okButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = okButton.png; sourceTree = "<group>"; };
 		FAA8AFD21BA9DC7F00DB43EF /* shareButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shareButton.png; sourceTree = "<group>"; };
+		FAB9F0551BAAF482002D29E2 /* numberEight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = numberEight.png; sourceTree = "<group>"; };
+		FAB9F0561BAAF482002D29E2 /* numberFive.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = numberFive.png; sourceTree = "<group>"; };
+		FAB9F0571BAAF482002D29E2 /* numberFour.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = numberFour.png; sourceTree = "<group>"; };
+		FAB9F0581BAAF482002D29E2 /* numberNine.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = numberNine.png; sourceTree = "<group>"; };
+		FAB9F0591BAAF482002D29E2 /* numberOne.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = numberOne.png; sourceTree = "<group>"; };
+		FAB9F05A1BAAF482002D29E2 /* numberSeven.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = numberSeven.png; sourceTree = "<group>"; };
+		FAB9F05B1BAAF482002D29E2 /* numberSix.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = numberSix.png; sourceTree = "<group>"; };
+		FAB9F05C1BAAF482002D29E2 /* numberThree.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = numberThree.png; sourceTree = "<group>"; };
+		FAB9F05D1BAAF482002D29E2 /* numberTwo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = numberTwo.png; sourceTree = "<group>"; };
+		FAB9F06A1BAAF505002D29E2 /* Score.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Score.h; sourceTree = "<group>"; };
+		FAB9F06B1BAAF505002D29E2 /* Score.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Score.m; sourceTree = "<group>"; };
+		FAB9F06D1BAB12A8002D29E2 /* numberZero.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = numberZero.png; sourceTree = "<group>"; };
+		FAB9F06F1BAB1AC6002D29E2 /* pauseButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pauseButton.png; sourceTree = "<group>"; };
+		FAB9F0701BAB1AC6002D29E2 /* playButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = playButton.png; sourceTree = "<group>"; };
+		FAB9F0731BAB1DAF002D29E2 /* exitButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = exitButton.png; sourceTree = "<group>"; };
 		FABFE23D1BA488C6008EE6C3 /* FlappyBird.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlappyBird.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FABFE2411BA488C6008EE6C3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FABFE2421BA488C6008EE6C3 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -113,6 +142,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FAB9F0691BAAF4B1002D29E2 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				FAB9F06A1BAAF505002D29E2 /* Score.h */,
+				FAB9F06B1BAAF505002D29E2 /* Score.m */,
+			);
+			name = Common;
+			sourceTree = "<group>";
+		};
 		FABFE2341BA488C6008EE6C3 = {
 			isa = PBXGroup;
 			children = (
@@ -140,6 +178,7 @@
 				FABFE26C1BA48949008EE6C3 /* GameCore */,
 				FABFE26D1BA48959008EE6C3 /* Scene */,
 				FABFE26E1BA48962008EE6C3 /* Sprite */,
+				FAB9F0691BAAF4B1002D29E2 /* Common */,
 				FABFE2811BA48B8A008EE6C3 /* Resource */,
 				FABFE24D1BA488C6008EE6C3 /* Images.xcassets */,
 				FABFE24F1BA488C6008EE6C3 /* LaunchScreen.xib */,
@@ -212,6 +251,19 @@
 		FABFE2811BA48B8A008EE6C3 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				FAB9F0731BAB1DAF002D29E2 /* exitButton.png */,
+				FAB9F06F1BAB1AC6002D29E2 /* pauseButton.png */,
+				FAB9F0701BAB1AC6002D29E2 /* playButton.png */,
+				FAB9F06D1BAB12A8002D29E2 /* numberZero.png */,
+				FAB9F0551BAAF482002D29E2 /* numberEight.png */,
+				FAB9F0561BAAF482002D29E2 /* numberFive.png */,
+				FAB9F0571BAAF482002D29E2 /* numberFour.png */,
+				FAB9F0581BAAF482002D29E2 /* numberNine.png */,
+				FAB9F0591BAAF482002D29E2 /* numberOne.png */,
+				FAB9F05A1BAAF482002D29E2 /* numberSeven.png */,
+				FAB9F05B1BAAF482002D29E2 /* numberSix.png */,
+				FAB9F05C1BAAF482002D29E2 /* numberThree.png */,
+				FAB9F05D1BAAF482002D29E2 /* numberTwo.png */,
 				FAA8AFCF1BA9DC7F00DB43EF /* gameover.png */,
 				FAA8AFD01BA9DC7F00DB43EF /* newLabel.png */,
 				FAA8AFD11BA9DC7F00DB43EF /* okButton.png */,
@@ -313,24 +365,37 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FAB9F0641BAAF482002D29E2 /* numberSeven.png in Resources */,
 				FAC2BA221BA73616008FC2FA /* sfx_swooshing.mp3 in Resources */,
 				FAC2BA201BA73616008FC2FA /* sfx_hit.mp3 in Resources */,
 				FAC2BA211BA73616008FC2FA /* sfx_point.mp3 in Resources */,
+				FAB9F0631BAAF482002D29E2 /* numberOne.png in Resources */,
 				FABFE2511BA488C6008EE6C3 /* LaunchScreen.xib in Resources */,
 				FAA8AFCD1BA9BE3E00DB43EF /* logo.png in Resources */,
+				FAB9F0671BAAF482002D29E2 /* numberTwo.png in Resources */,
+				FAB9F06E1BAB12A8002D29E2 /* numberZero.png in Resources */,
+				FAB9F0721BAB1AC6002D29E2 /* playButton.png in Resources */,
 				FAA8AFD31BA9DC7F00DB43EF /* gameover.png in Resources */,
 				FAA8AFD41BA9DC7F00DB43EF /* newLabel.png in Resources */,
 				FAA8AFD51BA9DC7F00DB43EF /* okButton.png in Resources */,
+				FAB9F0611BAAF482002D29E2 /* numberFour.png in Resources */,
 				FAA8AFCA1BA9B63400DB43EF /* sfx_wing.mp3 in Resources */,
 				FA99A0371BA5E7A300981D15 /* background.png in Resources */,
+				FAB9F0651BAAF482002D29E2 /* numberSix.png in Resources */,
 				FA99A02D1BA5BE7100981D15 /* bird1.png in Resources */,
 				FA99A02E1BA5BE7100981D15 /* bird2.png in Resources */,
 				FAA8AFCE1BA9BE3E00DB43EF /* guide.png in Resources */,
 				FAC2BA1F1BA73616008FC2FA /* sfx_die.mp3 in Resources */,
 				FAC2BA0B1BA71051008FC2FA /* pipe.png in Resources */,
+				FAB9F0621BAAF482002D29E2 /* numberNine.png in Resources */,
+				FAB9F0741BAB1DAF002D29E2 /* exitButton.png in Resources */,
+				FAB9F0601BAAF482002D29E2 /* numberFive.png in Resources */,
 				FA99A0381BA5E7A300981D15 /* bottom.png in Resources */,
+				FAB9F05F1BAAF482002D29E2 /* numberEight.png in Resources */,
 				FAC2BA0C1BA71051008FC2FA /* piperotate.png in Resources */,
+				FAB9F0711BAB1AC6002D29E2 /* pauseButton.png in Resources */,
 				FAA8AFD61BA9DC7F00DB43EF /* shareButton.png in Resources */,
+				FAB9F0661BAAF482002D29E2 /* numberThree.png in Resources */,
 				FABFE24E1BA488C6008EE6C3 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -351,6 +416,7 @@
 			files = (
 				FA99A0431BA602AA00981D15 /* BottomPipe.m in Sources */,
 				FABFE2731BA48982008EE6C3 /* Scene.m in Sources */,
+				FAB9F06C1BAAF505002D29E2 /* Score.m in Sources */,
 				FABFE2801BA48B6F008EE6C3 /* Bird.m in Sources */,
 				FABFE2461BA488C6008EE6C3 /* AppDelegate.m in Sources */,
 				FABFE2771BA48994008EE6C3 /* MainScene.m in Sources */,
