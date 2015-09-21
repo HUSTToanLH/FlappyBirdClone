@@ -274,7 +274,13 @@
 }
 
 -(void)onClickShare{
-    
+    if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]) {
+        SLComposeViewController *shareToFaceBook = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
+        [shareToFaceBook setInitialText:[NSString stringWithFormat:@"Copied by ToanLH. Score: %d", point]];
+        [shareToFaceBook addImage:[UIImage imageNamed:@"mu.jpg"]];
+        [shareToFaceBook addURL:[NSURL URLWithString:@"http://www.haivainoi.com"]];
+        [self presentViewController:shareToFaceBook animated:YES completion:nil];
+    }
 }
 
 -(void)onClickPause{

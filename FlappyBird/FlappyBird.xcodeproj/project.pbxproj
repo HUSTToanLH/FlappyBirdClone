@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FA9398091BB0546700EC2C61 /* mu.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FA9398081BB0546700EC2C61 /* mu.jpg */; };
 		FA99A02D1BA5BE7100981D15 /* bird1.png in Resources */ = {isa = PBXBuildFile; fileRef = FA99A02B1BA5BE7100981D15 /* bird1.png */; };
 		FA99A02E1BA5BE7100981D15 /* bird2.png in Resources */ = {isa = PBXBuildFile; fileRef = FA99A02C1BA5BE7100981D15 /* bird2.png */; };
 		FA99A0371BA5E7A300981D15 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = FA99A0331BA5E7A300981D15 /* background.png */; };
@@ -51,6 +52,7 @@
 		FAC2BA201BA73616008FC2FA /* sfx_hit.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FAC2BA1C1BA73616008FC2FA /* sfx_hit.mp3 */; };
 		FAC2BA211BA73616008FC2FA /* sfx_point.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FAC2BA1D1BA73616008FC2FA /* sfx_point.mp3 */; };
 		FAC2BA221BA73616008FC2FA /* sfx_swooshing.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FAC2BA1E1BA73616008FC2FA /* sfx_swooshing.mp3 */; };
+		FAF9A9661BAC3857005F1278 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAF9A9651BAC3857005F1278 /* Social.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +66,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		FA9398081BB0546700EC2C61 /* mu.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = mu.jpg; sourceTree = "<group>"; };
 		FA99A02B1BA5BE7100981D15 /* bird1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bird1.png; sourceTree = "<group>"; };
 		FA99A02C1BA5BE7100981D15 /* bird2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bird2.png; sourceTree = "<group>"; };
 		FA99A0331BA5E7A300981D15 /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
@@ -121,6 +124,7 @@
 		FAC2BA1C1BA73616008FC2FA /* sfx_hit.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = sfx_hit.mp3; sourceTree = "<group>"; };
 		FAC2BA1D1BA73616008FC2FA /* sfx_point.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = sfx_point.mp3; sourceTree = "<group>"; };
 		FAC2BA1E1BA73616008FC2FA /* sfx_swooshing.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = sfx_swooshing.mp3; sourceTree = "<group>"; };
+		FAF9A9651BAC3857005F1278 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,6 +132,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FAF9A9661BAC3857005F1278 /* Social.framework in Frameworks */,
 				FAC2BA181BA72FE8008FC2FA /* AVFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -154,6 +159,7 @@
 		FABFE2341BA488C6008EE6C3 = {
 			isa = PBXGroup;
 			children = (
+				FAF9A9651BAC3857005F1278 /* Social.framework */,
 				FAC2BA171BA72FE8008FC2FA /* AVFoundation.framework */,
 				FABFE23F1BA488C6008EE6C3 /* FlappyBird */,
 				FABFE2591BA488C6008EE6C3 /* FlappyBirdTests */,
@@ -251,6 +257,7 @@
 		FABFE2811BA48B8A008EE6C3 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				FA9398081BB0546700EC2C61 /* mu.jpg */,
 				FAB9F0731BAB1DAF002D29E2 /* exitButton.png */,
 				FAB9F06F1BAB1AC6002D29E2 /* pauseButton.png */,
 				FAB9F0701BAB1AC6002D29E2 /* playButton.png */,
@@ -387,6 +394,7 @@
 				FAA8AFCE1BA9BE3E00DB43EF /* guide.png in Resources */,
 				FAC2BA1F1BA73616008FC2FA /* sfx_die.mp3 in Resources */,
 				FAC2BA0B1BA71051008FC2FA /* pipe.png in Resources */,
+				FA9398091BB0546700EC2C61 /* mu.jpg in Resources */,
 				FAB9F0621BAAF482002D29E2 /* numberNine.png in Resources */,
 				FAB9F0741BAB1DAF002D29E2 /* exitButton.png in Resources */,
 				FAB9F0601BAAF482002D29E2 /* numberFive.png in Resources */,
